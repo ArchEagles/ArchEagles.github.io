@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webhook Receiver</title>
+</head>
+<body>
+  <h1>Webhook Receiver</h1>
+
+  <p>This webhook receiver is ready to receive and process webhook requests.</p>
+
+  <script>
+    // Get the webhook payload from the POST request.
+    const webhookPayload = JSON.parse(req.body);
+
+    // Process the webhook data and perform any necessary actions.
+    // For example, you could log the webhook data to a database or send an email notification.
+  </script>
+</body>
+</html>
