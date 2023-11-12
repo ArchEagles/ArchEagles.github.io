@@ -3,88 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flappy Bird</title>
+  <title>Message Website</title>
   <style>
     body {
-      background-color: #007bff;
+      font-family: sans-serif;
+      background-color: #f2f2f2;
     }
 
-    #game-container {
-      width: 600px;
-      height: 400px;
+    .container {
+      width: 80%;
       margin: 0 auto;
-      position: relative;
-    }
-
-    #bird {
-      width: 32px;
-      height: 32px;
-      background-color: #f00;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .pipe {
-      width: 50px;
-      height: 200px;
       background-color: #fff;
-      position: absolute;
-      top: 0;
-      left: 0;
+      border-radius: 10px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .pipe-top {
-      position: absolute;
-      top: -200px;
+    .header {
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .messages {
+      padding: 20px;
+      height: 400px;
+      overflow-y: scroll;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .message img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .message p {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .footer {
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .footer form {
+      display: flex;
+    }
+
+    .footer input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .footer button {
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div id="game-container">
-    <div id="bird"></div>
-    <div class="pipe"></div>
-    <div class="pipe pipe-top"></div>
+  <div class="container">
+    <div class="header">
+      <h2>Discord DMs</h2>
+    </div>
+
+    <div class="messages">
+      <div class="message">
+        <img src="https://picsum.photos/200/300" alt="User Avatar">
+        <p>Hi there!</p>
+      </div>
+
+      <div class="message">
+        <img src="https://picsum.photos/300/200" alt="User Avatar">
+        <p>Hello!</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <form>
+        <input type="text" placeholder="Type your message here">
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </div>
-
-  <script>
-    // Get the bird and pipe elements
-    const bird = document.getElementById('bird');
-    const pipes = document.querySelectorAll('.pipe');
-
-    // Set the bird's initial position
-    let birdTop = 200;
-    bird.style.top = birdTop + 'px';
-
-    // Set the pipes' initial positions
-    let pipeLeft = 600;
-    for (const pipe of pipes) {
-      pipe.style.left = pipeLeft + 'px';
-      pipeLeft += 200;
-    }
-
-    // Update the bird's position every frame
-    window.requestAnimationFrame(() => {
-      birdTop += 2;
-      bird.style.top = birdTop + 'px';
-
-      // Check for collisions between the bird and the pipes
-      for (const pipe of pipes) {
-        const pipeLeft = parseInt(pipe.style.left);
-        const pipeTop = parseInt(pipe.style.top);
-        const pipeBottom = pipeTop + pipe.offsetHeight;
-
-        if (birdTop < pipeTop || birdTop > pipeBottom) {
-          // Collision detected!
-          alert('Game Over!');
-          break;
-        }
-      }
-
-      // Request the next frame
-      window.requestAnimationFrame(() => update());
-    });
-  </script>
 </body>
 </html>
