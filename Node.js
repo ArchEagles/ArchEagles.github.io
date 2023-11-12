@@ -1,37 +1,32 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
+const socket = io('http://localhost:3000');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+// Handle message sending
+const chatForm = document.getElementById('chat-form');
+chatForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-const PORT = process.env.PORT || 3000;
+  const messageInput = document.getElementById('message-input');
+  const message = messageInput.value.trim();
+  if (message) {
+    // Send message to the server
+    socket.emit('chat message', message);
 
-io.on('connection', (socket) => {
-  console.log('User connected');
-
-  socket.on('chat message', (message) => {
-    console.log('Received message:', message);
-
-    // Broadcast the message to all connected users, excluding the sender
-    socket.broadcast.emit('chat message', {
-      username: socket.username,
-      message: message,
-    });
-  });
-
-  // Handle user authentication and set the username for the socket
-  socket.on('user login', (username) => {
-    socket.username = username;
-    console.log('User logged in as:', username);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
+    // Clear the message input
+    messageInput.value = '';
+  }
 });
 
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+// Handle incoming messages
+socket.on('chat message', (message) => {
+  // Display the received message
+  const chatMessages = document.getElementById('chat-messages');
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+  messageElement.innerHTML = `
+    <p>${message.username}: ${message.message}</p>
+  `;
+  chatMessages.appendChild(messageElement);
+
+  // Scroll to the bottom of the chat messages container
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 });
